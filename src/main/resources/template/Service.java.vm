@@ -28,7 +28,7 @@ public interface ${className}Service {
     /**
     * 删除
     */
-    void delete(List<Integer> Ids);
+    void delete(List<Integer> ids);
 
     /**
     * 查询列表

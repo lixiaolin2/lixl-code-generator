@@ -15,25 +15,30 @@ import ${package}.${moduleName}.dao.${className}Dao;
 import ${package}.${moduleName}.entity.${className}Entity;
 import ${package}.${moduleName}.service.${className}Service;
 
-
+/**
+ * ${comments}业务层
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
 @Service("${classname}Service" )
 public class ${className}ServiceImpl implements ${className}Service {
 
     @Autowired
-    private  ${className}Dao ${classname}Dao;
+    public ${className}Dao ${classname}Dao;
 
     /**
     * 保存
     */
     @Override
-    public   ${className}DTO save(${className}DTO ${classname}) {
-            ${classname}Dao.save(${classname});
+    public ${className}DTO save(${className}DTO ${classname}) {
+            ${classname}Dao.insert(${classname});
         return ${classname};
     }
 
     /**
     * 更新
-*/
+    */
     @Override
     public void update(${className}DTO ${classname}) {
             ${classname}Dao.update(${classname});
@@ -41,25 +46,23 @@ public class ${className}ServiceImpl implements ${className}Service {
 
     /**
     * 删除
-*/
+    */
     @Override
-    public void delete(List<Integer> ids);
-
-    {
+    public void delete(List<Integer> ids) {
             ${classname}Dao.delete(ids);
     }
 
     /**
     * 查询列表
-*/
+    */
     @Override
     public List<${className}VO> list(${className}DTO ${classname}) {
-        return  ${classname}Dao.list(${classname});
+        return ${classname}Dao.list(${classname});
     }
 
     /**
     * 分页
-*/
+    */
     @Override
     public PageData<${className}VO> page(${className}Page ${classname}) {
         PageData<${className}VO> pageData = new PageData<>(${classname}.getPageNo(), ${classname}.getLimit());

@@ -11,6 +11,8 @@ import java.util.Date;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * ${comments}
  *
@@ -18,12 +20,12 @@ import lombok.Data;
  * @date ${datetime}
  */
 @Data
-public class ${className}Page extends ${className}DTO  implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ${className}Page extends ${className}DTO {
 
-
+    @NotNull(message = "pageNo不能为空")
     private Integer pageNo;
 
+    @NotNull(message = "limit不能为空")
     private Integer limit;
 
 }

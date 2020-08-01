@@ -28,17 +28,17 @@ import java.util.zip.ZipOutputStream;
  */
 public class GenUtils {
 
-    public static List<String> getTemplates(){
+    public static List<String> getTemplates() {
         List<String> templates = new ArrayList<String>();
-        templates.add("template/Entity.java.vm");
-        templates.add("template/VO.java.vm");
-        templates.add("template/DTO.java.vm");
-        templates.add("template/Page.java.vm");
-        templates.add("template/Dao.java.vm");
-        templates.add("template/Dao.xml.vm");
-        templates.add("template/Service.java.vm");
-        templates.add("template/ServiceImpl.java.vm");
-        templates.add("template/Controller.java.vm");
+        templates.add("template/Entity.java.vm" );
+        templates.add("template/VO.java.vm" );
+        templates.add("template/DTO.java.vm" );
+        templates.add("template/Page.java.vm" );
+        templates.add("template/Dao.java.vm" );
+        templates.add("template/Dao.xml.vm" );
+        templates.add("template/Service.java.vm" );
+        templates.add("template/ServiceImpl.java.vm" );
+        templates.add("template/Controller.java.vm" );
 
 
         return templates;
@@ -63,7 +63,7 @@ public class GenUtils {
 
         //列信息
         List<ColumnEntity> columsList = new ArrayList<>();
-        for(Map<String, String> column : columns){
+        for (Map<String, String> column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
             columnEntity.setColumnName(column.get("columnName" ));
             columnEntity.setDataType(column.get("dataType" ));
@@ -100,7 +100,7 @@ public class GenUtils {
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader" );
         Velocity.init(prop);
         String mainPath = config.getString("mainPath" );
-        mainPath = StringUtils.isBlank(mainPath) ? "io.renren" : mainPath;
+        mainPath = StringUtils.isBlank(mainPath) ? "cn.lixl" : mainPath;
         //封装模板数据
         Map<String, Object> map = new HashMap<>();
         map.put("tableName", tableEntity.getTableName());
@@ -108,6 +108,7 @@ public class GenUtils {
         map.put("pk", tableEntity.getPk());
         map.put("className", tableEntity.getClassName());
         map.put("classname", tableEntity.getClassname());
+        map.put("classnameLower", tableEntity.getClassname().toLowerCase());
         map.put("pathName", tableEntity.getClassname().toLowerCase());
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
@@ -129,7 +130,7 @@ public class GenUtils {
 
             try {
                 //添加到zip
-                zip.putNextEntry(new ZipEntry(getFileName(template, tableEntity.getClassName(), config.getString("package" ), config.getString("moduleName" ))));
+                zip.putNextEntry(new ZipEntry(getFileName(mainPath, tableEntity.getClassname().toLowerCase(), template, tableEntity.getClassName(), config.getString("package" ), config.getString("moduleName" ))));
                 IOUtils.write(sw.toString(), zip, "UTF-8" );
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
@@ -171,10 +172,10 @@ public class GenUtils {
     /**
      * 获取文件名
      */
-    public static String getFileName(String template, String className, String packageName, String moduleName) {
-        String packagePath = "main" + File.separator + "java" + File.separator;
+    public static String getFileName(String mainPath, String lowerCaseClassname, String template, String className, String packageName, String moduleName) {
+        String packagePath = mainPath + File.separator + lowerCaseClassname + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
-            packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
+            packagePath += packageName.replace(".", File.separator) + File.separator;
         }
 
         if (template.contains("Entity.java.vm" )) {

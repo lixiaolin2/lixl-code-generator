@@ -11,6 +11,8 @@ import java.util.Date;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * ${comments}
  *
@@ -18,17 +20,17 @@ import lombok.Data;
  * @date ${datetime}
  */
 @Data
-@TableName("${tableName}" )
-public class ${className}DTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ${className}DTO {
 
     #foreach ($column in $columns)
-        /**
-         * $column.comments
-         */
-        #if($column.columnName == $pk.columnName)
-        @TableId
-        #end
+    /**
+     * $column.comments
+     */
+    #if($column.attrType == "String")
+    @NotBlank(message = "$column.attrname 不能为空" )
+    #else
+    @NotNull(message = "$column.attrname 不能为空" )
+    #end
     private $column.attrType $column.attrname;
     #end
 

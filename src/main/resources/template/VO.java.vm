@@ -14,20 +14,16 @@ import lombok.Data;
  * ${comments}
  * 
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
  */
 @Data
-@TableName("${tableName}")
-public class ${className}VO implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class ${className}VO {
 
 #foreach ($column in $columns)
 	/**
 	 * $column.comments
 	 */
 	#if($column.columnName == $pk.columnName)
-@TableId
 	#end
 private $column.attrType $column.attrname;
 #end

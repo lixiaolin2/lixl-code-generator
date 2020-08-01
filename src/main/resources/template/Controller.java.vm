@@ -1,4 +1,4 @@
-package ${package}.${moduleName}.controller;
+package ${mainPath}.${classnameLower}.controller;
 
 import java.util.Arrays;
 
@@ -9,12 +9,11 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import ${package}.${moduleName}.entity.${className}Entity;
-import ${package}.${moduleName}.service.${className}Service;
+import ${package}.entity.${className}Entity;
+import ${package}.service.${className}Service;
 import ${mainPath}.common.utils.PageUtils;
-import ${mainPath}.common.utils.R;
-
-
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 /**
  * ${comments}
  *
@@ -22,7 +21,7 @@ import ${mainPath}.common.utils.R;
  * @date ${datetime}
  */
 @RestController
-@RequestMapping("${moduleName}/${pathName}" )
+@RequestMapping("/${moduleName}/${pathName}" )
 public class ${className}Controller {
 
     @Autowired
@@ -35,7 +34,7 @@ public class ${className}Controller {
      * 查询列表
      */
     @GetMapping("/list" )
-    public BaseResponse list(${className}DTO ${classname}) {
+    public BaseResponse list(@Valid ${className}DTO ${classname}) {
         List<${className}VO> list = ${classname}Service.list(${classname});
         return baseApiService.setResultSuccess(list)
     }
@@ -45,7 +44,7 @@ public class ${className}Controller {
      * 根据主键查询
      */
     @GetMapping("/findById" )
-    public BaseResponse findById( ${className}DTO ${classname}) {
+    public BaseResponse findById(@NotNull(message = "${pk.attrname} 不能为空")${pk.attrType} ${pk.attrname}) {
         return baseApiService.setResultSuccess(${classname}Service.getById(${classname}));
     }
 
@@ -53,7 +52,7 @@ public class ${className}Controller {
      * 保存
      */
     @PostMapping("/save" )
-    public BaseResponse save(@RequestBody ${className}DTO ${classname}) {
+    public BaseResponse save(@Valid @RequestBody ${className}DTO ${classname}) {
 
         return baseApiService.setResultSuccess(${classname}Service.save(${classname}));
     }
@@ -62,16 +61,16 @@ public class ${className}Controller {
      * 修改
      */
     @PostMapping("/update" )
-    public BaseResponse update(@RequestBody ${className}DTO ${classname}) {
+    public BaseResponse update(@Valid @RequestBody ${className}DTO ${classname}) {
 
         return baseApiService.setResultSuccess(${classname}Service.update(${classname}));
     }
 
     /**
     * 删除
-*/
+    */
     @PostMapping("/delete" )
-    public BaseResponse delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s) {
+    public BaseResponse delete(@Valid @RequestBody ${pk.attrType}[] ${pk.attrname}s) {
             ${classname}Service.delete(Arrays.asList(${pk.attrname}s));
 
         return baseApiService.setResultSuccess(）;
@@ -79,9 +78,9 @@ public class ${className}Controller {
 
     /**
     * 分页
-*/
+    */
     @GetMapping("/page" )
-    public BaseResponse page(${className}Page ${classname}) {
+    public BaseResponse page(@Valid ${className}Page ${classname}) {
         PageData<${className}VO> page = ${classname}Service.page(Arrays.asList(${pk.attrname}s));
 
         return baseApiService.setResultSuccess(page);
