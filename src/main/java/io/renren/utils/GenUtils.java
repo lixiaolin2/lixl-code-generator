@@ -31,15 +31,15 @@ public class GenUtils {
     public static List<String> getTemplates(){
         List<String> templates = new ArrayList<String>();
         templates.add("template/Entity.java.vm");
+        templates.add("template/VO.java.vm");
+        templates.add("template/DTO.java.vm");
+        templates.add("template/Page.java.vm");
         templates.add("template/Dao.java.vm");
         templates.add("template/Dao.xml.vm");
         templates.add("template/Service.java.vm");
         templates.add("template/ServiceImpl.java.vm");
         templates.add("template/Controller.java.vm");
-        templates.add("template/menu.sql.vm");
 
-        templates.add("template/index.vue.vm");
-        templates.add("template/add-or-update.vue.vm");
 
         return templates;
     }
@@ -181,6 +181,18 @@ public class GenUtils {
             return packagePath + "entity" + File.separator + className + "Entity.java";
         }
 
+        if (template.contains("DTO.java.vm" )) {
+            return packagePath + "dto" + File.separator + className + "DTO.java";
+        }
+
+        if (template.contains("VO.java.vm" )) {
+            return packagePath + "vo" + File.separator + className + "VO.java";
+        }
+
+        if (template.contains("Page.java.vm" )) {
+            return packagePath + "dto" + File.separator + className + "Page.java";
+        }
+
         if (template.contains("Dao.java.vm" )) {
             return packagePath + "dao" + File.separator + className + "Dao.java";
         }
@@ -198,22 +210,19 @@ public class GenUtils {
         }
 
         if (template.contains("Dao.xml.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Dao.xml";
+            return packagePath + "resources" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Dao.xml";
         }
 
-        if (template.contains("menu.sql.vm" )) {
-            return className.toLowerCase() + "_menu.sql";
-        }
 
-        if (template.contains("index.vue.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "src" + File.separator + "views" + File.separator + "modules" +
-                    File.separator + moduleName + File.separator + className.toLowerCase() + ".vue";
-        }
+//        if (template.contains("index.vue.vm" )) {
+//            return "main" + File.separator + "resources" + File.separator + "src" + File.separator + "views" + File.separator + "modules" +
+//                    File.separator + moduleName + File.separator + className.toLowerCase() + ".vue";
+//        }
 
-        if (template.contains("add-or-update.vue.vm" )) {
-            return "main" + File.separator + "resources" + File.separator + "src" + File.separator + "views" + File.separator + "modules" +
-                    File.separator + moduleName + File.separator + className.toLowerCase() + "-add-or-update.vue";
-        }
+//        if (template.contains("add-or-update.vue.vm" )) {
+//            return "main" + File.separator + "resources" + File.separator + "src" + File.separator + "views" + File.separator + "modules" +
+//                    File.separator + moduleName + File.separator + className.toLowerCase() + "-add-or-update.vue";
+//        }
 
         return null;
     }

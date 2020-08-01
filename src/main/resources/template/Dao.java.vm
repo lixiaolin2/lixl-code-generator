@@ -8,10 +8,34 @@ import org.apache.ibatis.annotations.Mapper;
  * ${comments}
  * 
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
  */
 @Mapper
-public interface ${className}Dao extends BaseMapper<${className}Entity> {
-	
+public interface ${className}Dao{
+
+
+    /**
+     * 保存
+     */
+        void save(${className}DTO ${classname});
+
+    /**
+    * 更新
+*/
+    void update(${className}DTO ${classname});
+
+    /**
+    * 删除
+*/
+    void delete(List<Integer> Ids);
+
+    /**
+    * 查询列表
+*/
+    List<${className}VO> list(${className}DTO ${classname});
+
+    /**
+    * 分页
+*/
+    PageData<${className}VO> page(${className}Page ${classname});
 }

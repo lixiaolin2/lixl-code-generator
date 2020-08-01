@@ -4,17 +4,40 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import ${mainPath}.common.utils.PageUtils;
 import ${package}.${moduleName}.entity.${className}Entity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
  * ${comments}
  *
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
  */
-public interface ${className}Service extends IService<${className}Entity> {
+public interface ${className}Service {
 
-    PageUtils queryPage(Map<String, Object> params);
+    /**
+    * 保存
+    */
+    ${className}DTO save(${className}DTO ${classname});
+
+    /**
+    * 更新
+    */
+    void update(${className}DTO ${classname});
+
+    /**
+    * 删除
+    */
+    void delete(List<Integer> Ids);
+
+    /**
+    * 查询列表
+    */
+    List<${className}VO> list(${className}DTO ${classname});
+
+    /**
+    * 分页
+    */
+    PageData<${className}VO> page(${className}Page ${classname});
 }
 
