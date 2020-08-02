@@ -39,8 +39,6 @@ public class GenUtils {
         templates.add("template/Service.java.vm" );
         templates.add("template/ServiceImpl.java.vm" );
         templates.add("template/Controller.java.vm" );
-
-
         return templates;
     }
 
@@ -113,7 +111,7 @@ public class GenUtils {
         map.put("columns", tableEntity.getColumns());
         map.put("hasBigDecimal", hasBigDecimal);
         map.put("mainPath", mainPath);
-        map.put("package", config.getString("package" ));
+        map.put("basePath", config.getString("basePath"));
         map.put("moduleName", config.getString("moduleName" ));
         map.put("author", config.getString("author" ));
         map.put("email", config.getString("email" ));
@@ -130,7 +128,7 @@ public class GenUtils {
 
             try {
                 //添加到zip
-                zip.putNextEntry(new ZipEntry(getFileName(mainPath, tableEntity.getClassname().toLowerCase(), template, tableEntity.getClassName(), config.getString("package" ), config.getString("moduleName" ))));
+                zip.putNextEntry(new ZipEntry(getFileName(mainPath, template, tableEntity.getClassName(), config.getString("moduleName" ))));
                 IOUtils.write(sw.toString(), zip, "UTF-8" );
                 IOUtils.closeQuietly(sw);
                 zip.closeEntry();
@@ -172,11 +170,8 @@ public class GenUtils {
     /**
      * 获取文件名
      */
-    public static String getFileName(String mainPath, String lowerCaseClassname, String template, String className, String packageName, String moduleName) {
-        String packagePath = mainPath + File.separator + lowerCaseClassname + File.separator;
-        if (StringUtils.isNotBlank(packageName)) {
-            packagePath += packageName.replace(".", File.separator) + File.separator;
-        }
+    public static String getFileName(String mainPath, String template, String className, String moduleName) {
+        String packagePath = mainPath + File.separator + className.toLowerCase() + File.separator;
 
         if (template.contains("Entity.java.vm" )) {
             return packagePath + "entity" + File.separator + className + "Entity.java";

@@ -1,18 +1,13 @@
-package ${package}.${moduleName}.entity;
-
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
-    #if(${hasBigDecimal})
-    import java.math.BigDecimal;
-    #end
-import java.io.Serializable;
+package ${mainPath}.${classnameLower}.dto;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
 import java.util.Date;
-
+#if($column.attrType == "Date")
+import java.util.Date;
+#end
 import lombok.Data;
-
-import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.*;
 /**
  * ${comments}
  *
@@ -23,14 +18,14 @@ import javax.validation.constraints.NotBlank;
 public class ${className}DTO {
 
     #foreach ($column in $columns)
-    /**
-     * $column.comments
-     */
-    #if($column.attrType == "String")
-    @NotBlank(message = "$column.attrname 不能为空" )
-    #else
-    @NotNull(message = "$column.attrname 不能为空" )
-    #end
+        /**
+         * $column.comments
+         */
+        #if($column.attrType == "String")
+        @NotBlank(message = "$column.attrname 不能为空" )
+        #else
+        @NotNull(message = "$column.attrname 不能为空" )
+        #end
     private $column.attrType $column.attrname;
     #end
 

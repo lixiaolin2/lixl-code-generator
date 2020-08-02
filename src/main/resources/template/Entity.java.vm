@@ -1,15 +1,11 @@
-package ${package}.${moduleName}.entity;
-
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
+package ${mainPath}.${classnameLower}.entity;
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
 #end
-import java.io.Serializable;
+#if($column.attrType == "Date")
 import java.util.Date;
+#end
 import lombok.Data;
-
 /**
  * ${comments}
  * 

@@ -1,11 +1,8 @@
-package ${package}.${moduleName}.service;
-
-import com.baomidou.mybatisplus.extension.service.IService;
-import ${mainPath}.common.utils.PageUtils;
-import ${package}.${moduleName}.entity.${className}Entity;
-
+package ${mainPath}.${classnameLower}.service;
+import ${mainPath}.${classnameLower}.dto.*;
+import ${mainPath}.${classnameLower}.vo.${className}VO;
+import ${basePath}.common.base.PageData;
 import java.util.List;
-import java.util.Map;
 
 /**
  * ${comments}
@@ -39,5 +36,15 @@ public interface ${className}Service {
     * 分页
     */
     PageData<${className}VO> page(${className}Page ${classname});
+
+    /**
+    * 根据id查询
+    */
+    ${className}VO findById(${pk.attrType} ${pk.attrname});
+
+    /**
+    * 批量添加
+    */
+    void batchInsert(List<${className}DTO> ${classname});
 }
 

@@ -1,17 +1,15 @@
 package ${mainPath}.${classnameLower}.controller;
-
+import java.util.List;
 import java.util.Arrays;
-
-import io.renren.base.BaseApiService;
-import io.renren.base.BaseResponse;
-import io.renren.base.PageData;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import ${mainPath}.${classnameLower}.dto.*;
+import ${mainPath}.${classnameLower}.vo.*;
+import ${basePath}.common.base.BaseApiService;
+import ${basePath}.common.base.BaseResponse;
+import ${basePath}.common.base.PageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import ${package}.entity.${className}Entity;
-import ${package}.service.${className}Service;
-import ${mainPath}.common.utils.PageUtils;
+import ${mainPath}.${classnameLower}.service.${className}Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 /**
@@ -36,7 +34,7 @@ public class ${className}Controller {
     @GetMapping("/list" )
     public BaseResponse list(@Valid ${className}DTO ${classname}) {
         List<${className}VO> list = ${classname}Service.list(${classname});
-        return baseApiService.setResultSuccess(list)
+        return baseApiService.setResultSuccess(list);
     }
 
 
@@ -45,7 +43,7 @@ public class ${className}Controller {
      */
     @GetMapping("/findById" )
     public BaseResponse findById(@NotNull(message = "${pk.attrname} 不能为空")${pk.attrType} ${pk.attrname}) {
-        return baseApiService.setResultSuccess(${classname}Service.getById(${classname}));
+        return baseApiService.setResultSuccess(${classname}Service.findById(${pk.attrname}));
     }
 
     /**
@@ -62,8 +60,8 @@ public class ${className}Controller {
      */
     @PostMapping("/update" )
     public BaseResponse update(@Valid @RequestBody ${className}DTO ${classname}) {
-
-        return baseApiService.setResultSuccess(${classname}Service.update(${classname}));
+            ${classname}Service.update(${classname});
+        return baseApiService.setResultSuccess();
     }
 
     /**
@@ -73,7 +71,7 @@ public class ${className}Controller {
     public BaseResponse delete(@Valid @RequestBody ${pk.attrType}[] ${pk.attrname}s) {
             ${classname}Service.delete(Arrays.asList(${pk.attrname}s));
 
-        return baseApiService.setResultSuccess(）;
+        return baseApiService.setResultSuccess();
     }
 
     /**
@@ -81,7 +79,7 @@ public class ${className}Controller {
     */
     @GetMapping("/page" )
     public BaseResponse page(@Valid ${className}Page ${classname}) {
-        PageData<${className}VO> page = ${classname}Service.page(Arrays.asList(${pk.attrname}s));
+        PageData<${className}VO> page = ${classname}Service.page(${classname});
 
         return baseApiService.setResultSuccess(page);
     }
