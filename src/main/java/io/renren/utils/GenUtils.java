@@ -206,7 +206,7 @@ public class GenUtils {
         }
 
         if (template.contains("Dao.xml.vm" )) {
-            return packagePath + "resources" + File.separator + "mapper" + File.separator + moduleName + File.separator + className + "Dao.xml";
+            return packagePath + File.separator + "mappings" + File.separator + className + "Dao.xml";
         }
 
 

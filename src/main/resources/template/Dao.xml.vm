@@ -4,64 +4,63 @@
 <mapper namespace="${mainPath}.${classnameLower}.dao.${className}Dao">
 
     <sql id="AllColumn">
-        #foreach($column in $columns)
-		`$column.columnName`#if($velocityCount != $columns.size()),
-		#end
+    #foreach($column in $columns)
+    `$column.columnName`#if($velocityCount != $columns.size()),
+    #end
     #end
     </sql>
 
     <insert id="insert" parameterType="${mainPath}.${classnameLower}.dto.${className}DTO" useGeneratedKeys="true"
             keyProperty="$pk.attrname">
-      INSERT INTO ${tableName}(
-      #foreach($column in $columns)
-        #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
-        `$column.columnName`#if($velocityCount != $columns.size()),
-        #end
-        #end
+    INSERT INTO ${tableName}(
+    #foreach($column in $columns)
+    #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
+    `$column.columnName`#if($velocityCount != $columns.size()),
     #end
-      ) VALUES(
-      #foreach($column in $columns)
-        #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
-		#{$column.attrname}#if($velocityCount != $columns.size()),
-        #end
-        #end
     #end
-	  )
+    #end
+    ) VALUES(
+    #foreach($column in $columns)
+    #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
+    #{$column.attrname}#if($velocityCount != $columns.size()),
+    #end
+    #end
+    #end
+    )
     </insert>
 
     <insert id="batchInsert" useGeneratedKeys="true" keyProperty="$pk.attrname">
         INSERT INTO ${tableName}(
         #foreach($column in $columns)
-            #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
-                `$column.columnName`#if($velocityCount != $columns.size()),
-            #end
-            #end
+        #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
+        `$column.columnName`#if($velocityCount != $columns.size()),
+        #end
+        #end
         #end
         ) VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (
-            #foreach($column in $columns)
-                #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
-                    #{$column.attrname}#if($velocityCount != $columns.size()),
-                #end
-                #end
-            #end
-            )
+        (
+        #foreach($column in $columns)
+        #if($column.columnName != $pk.columnName && $pk.extra != 'auto_increment')
+        #{item.$column.attrname}#if($velocityCount != $columns.size()),
+        #end
+        #end
+        #end
+        )
         </foreach>
-
-
     </insert>
 
     <update id="update" parameterType="${mainPath}.${classnameLower}.dto.${className}DTO">
         UPDATE ${tableName}
         set
-            #foreach($column in $columns)
-                <if test="$column.attrname != null #if($column.attrType == "String") and $column.attrname != ''#end">
-                    `$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()),
-                #end</if>
-            #end
+        #foreach($column in $columns)
+        <if test="$column.attrname != null #if($column.attrType == "String") and $column.attrname != '' #end">
+        `$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()),
+        #end
+        </if>
+        #end
         WHERE
-            ${pk.columnName} = #{${pk.attrname}}
+        ${pk.columnName} = #{${pk.attrname}}
     </update>
 
     <delete id="delete">
@@ -80,11 +79,11 @@
         <include refid="AllColumn"/>
         FROM ${tableName}
         <where>
-            #foreach($column in $columns)
-                <if test="$column.attrname!=null and $column.attrname !=''">
-                    and `$column.columnName` = #{$column.attrname})
-                </if>
-            #end
+        #foreach($column in $columns)
+        <if test="$column.attrname!=null #if($column.attrType == "String") and $column.attrname != '' #end">
+        and `$column.columnName` = #{$column.attrname}
+        </if>
+        #end
         </where>
     </select>
 </mapper>
