@@ -1,0 +1,46 @@
+package ${mainPath}.${classnameLower}.dao;
+import org.springframework.stereotype.Component;
+import ${mainPath}.${classnameLower}.dto.*;
+import ${mainPath}.${classnameLower}.vo.*;
+import java.util.List;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Component
+public interface ${className}Dao {
+
+
+    /**
+     * 保存
+     */
+    void insert(${className}DTO ${classname});
+
+    /**
+    * 批量添加
+    */
+    void batchInsert(List<${className}DTO> list);
+
+    /**
+    * 更新
+    */
+    void update(${className}DTO ${classname});
+
+    /**
+    * 删除
+    */
+    void delete(List<Integer> ids);
+
+    /**
+    * 查询列表
+    */
+    List<${className}VO> list(${className}DTO ${classname});
+
+    /**
+    * 根据id查询
+    */
+    ${className}VO findById(${pk.attrType} ${pk.attrname});
+}

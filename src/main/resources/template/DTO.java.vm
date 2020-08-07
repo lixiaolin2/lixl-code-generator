@@ -1,0 +1,32 @@
+package ${mainPath}.${classnameLower}.dto;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+import java.util.Date;
+#if($column.attrType == "Date")
+import java.util.Date;
+#end
+import lombok.Data;
+import javax.validation.constraints.*;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+public class ${className}DTO {
+
+    #foreach ($column in $columns)
+        /**
+         * $column.comments
+         */
+        #if($column.attrType == "String")
+        @NotBlank(message = "$column.attrname 不能为空" )
+        #else
+        @NotNull(message = "$column.attrname 不能为空" )
+        #end
+    private $column.attrType $column.attrname;
+    #end
+
+}

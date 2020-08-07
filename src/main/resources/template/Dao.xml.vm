@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${mainPath}.${classnameLower}.dao.${className}Dao">
+
+    <sql id="AllColumn">
+    #foreach($column in $columns)
+    `$column.columnName`#if($velocityCount != $columns.size()),
+    #end
+    #end
+    </sql>
+
+    <insert id="insert" parameterType="${mainPath}.${classnameLower}.dto.${className}DTO" useGeneratedKeys="true" keyProperty="$pk.attrname">
+    INSERT INTO ${tableName}(
+    #foreach($column in $columns)
+    `$column.columnName`#if($velocityCount != $columns.size()),
+    #end
+    #end
+    ) VALUES(
+    #foreach($column in $columns)
+    #{$column.attrname}#if($velocityCount != $columns.size()),
+    #end
+    #end
+    )
+    </insert>
+
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="$pk.attrname">
+        INSERT INTO ${tableName}(
+        #foreach($column in $columns)
+
+        `$column.columnName`#if($velocityCount != $columns.size()),
+        #end
+        #end
+        ) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+        #foreach($column in $columns)
+        #{item.$column.attrname}#if($velocityCount != $columns.size()),
+        #end
+        #end
+        )
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="${mainPath}.${classnameLower}.dto.${className}DTO">
+        UPDATE ${tableName}
+        set
+        #foreach($column in $columns)
+        <if test="$column.attrname != null #if($column.attrType == "String") and $column.attrname != '' #end">
+        `$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()),
+        #end
+        </if>
+        #end
+        WHERE
+        ${pk.columnName} = #{${pk.attrname}}
+    </update>
+
+    <delete id="delete">
+		DELETE FROM ${tableName}
+        WHERE ${pk.columnName} IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+	</delete>
+
+    <select id="findById" resultType="${mainPath}.${classnameLower}.vo.${className}VO">
+        SELECT
+        <include refid="AllColumn"/>
+        FROM ${tableName}
+        WHERE ${pk.columnName} = #{${pk.attrname}}
+    </select>
+
+    <select id="list" resultType="${mainPath}.${classnameLower}.vo.${className}VO">
+        SELECT
+        <include refid="AllColumn"/>
+        FROM ${tableName}
+        <where>
+        #foreach($column in $columns)
+        <if test="$column.attrname!=null #if($column.attrType == "String") and $column.attrname != '' #end">
+        and `$column.columnName` = #{$column.attrname}
+        </if>
+        #end
+        </where>
+    </select>
+</mapper>

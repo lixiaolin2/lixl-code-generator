@@ -1,0 +1,87 @@
+package ${mainPath}.${classnameLower}.controller;
+import java.util.List;
+import java.util.Arrays;
+import ${mainPath}.${classnameLower}.dto.*;
+import ${mainPath}.${classnameLower}.vo.*;
+import ${basePath}.common.base.BaseApiService;
+import ${basePath}.common.base.BaseResponse;
+import ${basePath}.common.base.PageData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import ${mainPath}.${classnameLower}.service.${className}Service;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("/${moduleName}/${pathName}" )
+public class ${className}Controller {
+
+    @Autowired
+    private BaseApiService baseApiService;
+
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+    /**
+     * 查询列表
+     */
+    @GetMapping("/list" )
+    public BaseResponse list(@Valid ${className}DTO ${classname}) {
+        List<${className}VO> list = ${classname}Service.list(${classname});
+        return baseApiService.setResultSuccess(list);
+    }
+
+
+    /**
+     * 根据主键查询
+     */
+    @GetMapping("/findById" )
+    public BaseResponse findById(@NotNull(message = "${pk.attrname} 不能为空")${pk.attrType} ${pk.attrname}) {
+        return baseApiService.setResultSuccess(${classname}Service.findById(${pk.attrname}));
+    }
+
+    /**
+     * 保存
+     */
+    @PostMapping("/save" )
+    public BaseResponse save(@Valid @RequestBody ${className}DTO ${classname}) {
+
+        return baseApiService.setResultSuccess(${classname}Service.save(${classname}));
+    }
+
+    /**
+     * 修改
+     */
+    @PostMapping("/update" )
+    public BaseResponse update(@Valid @RequestBody ${className}DTO ${classname}) {
+            ${classname}Service.update(${classname});
+        return baseApiService.setResultSuccess();
+    }
+
+    /**
+    * 删除
+    */
+    @PostMapping("/delete" )
+    public BaseResponse delete(@Valid @RequestBody ${pk.attrType}[] ${pk.attrname}s) {
+            ${classname}Service.delete(Arrays.asList(${pk.attrname}s));
+
+        return baseApiService.setResultSuccess();
+    }
+
+    /**
+    * 分页
+    */
+    @GetMapping("/page" )
+    public BaseResponse page(@Valid ${className}Page ${classname}) {
+        PageData<${className}VO> page = ${classname}Service.page(${classname});
+
+        return baseApiService.setResultSuccess(page);
+    }
+
+}

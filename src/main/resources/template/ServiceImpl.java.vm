@@ -1,0 +1,80 @@
+package ${mainPath}.${classnameLower}.service.impl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ${basePath}.common.base.PageData;
+import ${mainPath}.${classnameLower}.dao.${className}Dao;
+import ${mainPath}.${classnameLower}.dto.*;
+import ${mainPath}.${classnameLower}.vo.*;
+import ${mainPath}.${classnameLower}.service.*;
+import com.github.pagehelper.PageHelper;
+import java.util.List;
+/**
+ * ${comments}业务层
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+public class ${className}ServiceImpl implements ${className}Service {
+
+    @Autowired
+    public ${className}Dao ${classname}Dao;
+
+    /**
+    * 保存
+    */
+    @Override
+    public ${className}DTO save(${className}DTO ${classname}) {
+            ${classname}Dao.insert(${classname});
+        return ${classname};
+    }
+
+    /**
+    * 更新
+    */
+    @Override
+    public void update(${className}DTO ${classname}) {
+            ${classname}Dao.update(${classname});
+    }
+
+    /**
+    * 删除
+    */
+    @Override
+    public void delete(List<Integer> ids) {
+            ${classname}Dao.delete(ids);
+    }
+
+    /**
+    * 查询列表
+    */
+    @Override
+    public List<${className}VO> list(${className}DTO ${classname}) {
+        return ${classname}Dao.list(${classname});
+    }
+
+    /**
+    * 分页
+    */
+    @Override
+    public PageData<${className}VO> page(${className}Page ${classname}) {
+        PageData<${className}VO> pageData = new PageData<>(${classname}.getPageNo(), ${classname}.getLimit());
+        PageHelper.startPage(pageData.getPageNo(), pageData.getLimit());
+        List<${className}VO> list = ${classname}Dao.list(${classname});
+        pageData.setData(list);
+        return pageData;
+    }
+
+    @Override
+    public ${className}VO findById(${pk.attrType} ${pk.attrname}){
+        return ${classname}Dao.findById(${pk.attrname});
+    }
+
+    /**
+    * 批量添加
+    */
+    @Override
+    public void batchInsert(List<${className}DTO> list){
+        ${classname}Dao.batchInsert(list);
+    }
+}

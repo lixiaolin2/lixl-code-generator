@@ -1,0 +1,23 @@
+package ${mainPath}.${classnameLower}.dto;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+import lombok.Data;
+import javax.validation.constraints.*;
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+public class ${className}Page extends ${className}DTO {
+
+    @NotNull(message = "pageNo不能为空")
+    private Integer pageNo;
+
+    @NotNull(message = "limit不能为空")
+    private Integer limit;
+
+}
