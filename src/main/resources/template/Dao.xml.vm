@@ -44,7 +44,7 @@
 
     <update id="update" parameterType="${mainPath}.${classnameLower}.dto.${className}DTO">
         UPDATE ${tableName}
-        set
+        SET
         #foreach($column in $columns)
         <if test="$column.attrname != null #if($column.attrType == "String") and $column.attrname != '' #end">
         `$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()),
